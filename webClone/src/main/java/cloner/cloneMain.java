@@ -2,7 +2,15 @@ package cloner;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import javax.security.cert.X509Certificate;
 
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Connection.Response;
@@ -18,14 +26,14 @@ public class cloneMain {
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
 
-		String url2 = "https://twitter.com/login";
+		String url2 = "https://URLtoClone";
 		
 		//Use this if the web Page to clone has their own css /js /img and you cant access to them
 		// Ex : String homeHomeUrlToClone2 = "https://es.wikiquote.org";
-		String homeHomeUrlToClone2 ="";
+		String homeHomeUrlToClone2 ="https://domainname";
 		
-		String path = "C:\\Users\\username\\Desktop";
-		String fileName = "twitter";
+		String path = "C:\\Users\\name\\Desktop";
+		String fileName = "filename";
 
 		ArrayList <String> elementsToChange = new ArrayList<String>();
 		elementsToChange.add("script");
@@ -57,7 +65,39 @@ public class cloneMain {
 	}
 
 	public static Document getHTML(String URL) throws IOException {
-
+		
+		//Use only if you have problems with SSL connections and Certs
+		//-----------------
+		//-----------------
+		// Create a trust manager that does not validate certificate chains
+//		TrustManager[] trustAllCerts = new TrustManager[]{
+//				new X509TrustManager() {
+//					public java.security.cert.X509Certificate[] getAcceptedIssuers(){return null;}
+//		    public void checkClientTrusted(X509Certificate[] certs, String authType){}
+//		    public void checkServerTrusted(X509Certificate[] certs, String authType){}
+//			public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType)
+//					throws CertificateException {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType)
+//					throws CertificateException {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		}};
+//
+//		// Install the all-trusting trust manager
+//		try {
+//		    SSLContext sc = SSLContext.getInstance("TLS");
+//		    sc.init(null, trustAllCerts, new SecureRandom());
+//		    HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+//		} catch (Exception e) {
+//		    ;
+//		}
+//		
+		//-----------------
+		//-----------------
 		Response response = Jsoup.connect(URL).execute();
 		return response.parse();
 
